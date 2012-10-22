@@ -1,0 +1,86 @@
+/*
+			colModel
+			
+			也有许多非常重要的选项，在使用搜索、排序等方面都会用到。这里先只说说最基本的。
+			name ：为Grid中的每个列设置唯一的名称，这是一个必需选项，其中保留字包括subgrid、cb、rn。
+			index ：设置排序时所使用的索引名称，这个index名称会作为sidx参数（prmNames中设置的）传递到Server。
+			label ：当jqGrid的colNames选项数组为空时，为各列指定题头。如果colNames和此项都为空时，则name选项值会成为题头。
+			width ：设置列的宽度，目前只能接受以px为单位的数值，默认为150。
+			sortable ：设置该列是否可以排序，默认为true。
+			search ：设置该列是否可以被列为搜索条件，默认为true。
+			resizable ：设置列是否可以变更尺寸，默认为true。
+			hidden ：设置此列初始化时是否为隐藏状态，默认为false。
+			formatter ：预设类型或用来格式化该列的自定义函数名。常用预设格式有：integer、date、currency、number等
+			*/
+/*jsonReader : {
+				root: "rows", // json中代表实际模型数据的入口
+				page: "page", // json中代表当前页码的数据
+				total: "total", // json中代表页码总数的数据
+				records: "records", // json中代表数据行总数的数据
+				//据其他网友的文章，如果设置repeatitems为false，不但数据可以乱序，
+				//而且不用每个数据元素都要具备，用到哪个找到哪个就可以了。实验却是如此。
+				repeatitems: true, // 如果设为false，则jqGrid在解析json时，会根据name来搜索对应的数据元素（即可以json中元素可以不按顺序）；而所使用的name是来自于colModel中的name设定。
+				cell: "cell",
+				id: "id",
+				userdata: "userdata",
+				subgrid: {
+				root:"rows",
+				repeatitems: true,
+				cell:"cell"
+				}
+				}*/
+beforeInitData, beforeShowForm在每次点击编辑的时候都会执行。initComparator的作用是通过ajax获取数据，然后利用$("#list_d").jqGrid('setColProp', 'Comparator', { editoptions: { value: valueString} });来设置Comparator下拉中的内容。其中valueString的格式如下’ equal to: equal to; not equal to: not equal to’。键值之间用冒号隔开，2项之间用分号隔开。注意：把recreateForm设为true，否则'setColProp'只在第一次调用时有效。
+2. var rowNum = parseInt($(this).getGridParam("records"), 10); 得到数据条数。
+3. jQuery("#list_d").clearGridData();清空数据。
+4. jQuery("#list").getCell(ids,"Key");获取第ids行的key列。
+5. $("#list").jqGrid('setSelection', "1");选中第一行。放在loadComplete：中在gird加载完成的时候自动选中第一行。loadComplete:function(data){$("#list").jqGrid('setSelection', "1");
+}
+6. 对于像1中的可编辑的字段，可以设定rule，参见http://www.trirand.com/jqgridwiki/doku.php?id=wiki:common_rules#editrules
+7. 修改Option，以URL为例
+jQuery("#list_d").jqGrid('setGridParam',{url:"xxx.aspx",page:1}).trigger('reloadGrid');	
+			
+1.获得当前列表行数：$("#gridid").getGridParam("reccount");
+2.获取选中行数据（json）：$("#gridid").jqGrid('getRowData', id);
+3.刷新列表:$(refreshSelector).jqGrid('setGridParam', { url: ''), postData: ''}).trigger('reloadGrid'); 
+4.选中行：$("#jqGrid").setSelection("1", true);   （Toggles a selection of the row with id = rowid; if onselectrow is true (the default) then the event onSelectRow is launched, otherwise it is not.）//true:重新加载表格数据, false:不重新加载表格数据
+5.重置选中行：$("#jqgrid").resetSelection(); //Resets (unselects) the selected row(s). Also works in multiselect mode.
+6.清除：$("#jqgrid").clearGridData();   //Clears the currently loaded data from grid. If the clearfooter parameter is set to true, the method clears the data placed on the footer row.
+7. $("#jqgrid").setCell(rowid,colname,nData,cssp,attrp); 
+//This method can change the content of particular cell and can set class or style properties. Where: 
+rowid the id of the row, 
+colname the name of the column (this parameter can be a number (the index of the column) beginning from 0 
+data the content that can be put into the cell. If empty string the content will not be changed 
+class if class is string then we add a class to the cell using addClass; if class is an array we set the new css properties via css 
+properties sets the attribute properies of the cell, 
+forceup If the parameter is set to true we perform update of the cell instead that the value is empty 
+ 
+8.获取选中行ID
+ var rowid = $("#jqgrid").jqGrid('getGridParam','selrow'); 
+var rowid = $("#searchResultList").getGridParam("selrow");
+var rowData = $("#searchResultList").getRowData(rowid); /根据行ID，获取选中行的数据(根据)
+//获取选中的多行ID列表
+var selectedIds  = jQuery("#stationList").jqGrid("getGridParam","selarrrow"); 允许多行选择时使用				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+							
+			
+			

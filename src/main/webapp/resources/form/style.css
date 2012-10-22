@@ -1,0 +1,27 @@
+
+.ipt{
+    background: url("img/i-1.0.0.png") no-repeat scroll -304px 0 transparent;
+    border-color: #9A9A9A #CDCDCD #CDCDCD #9A9A9A;
+    border-style: solid;
+    border-width: 1px;
+    font: 16px arial;
+    height: 22px;
+    padding: 4px 7px;
+    vertical-align: top;
+    width: 160px;
+     margin: 0 5px 0 0;
+}
+
+/*<input id="su" class="btn" type="submit" onmouseout="this.className='btn'" onmousedown="this.className='btn btn_h'" value="百度一下">*/
+.btn {
+    background: url("img/i-1.0.0.png") no-repeat scroll 0 0 #DDDDDD;
+    border: 0 none;
+    cursor: pointer;
+    height: 32px;
+    padding: 0;
+    width: 95px;
+}
+
+.btn_h {
+    background-position: -100px 0;
+}

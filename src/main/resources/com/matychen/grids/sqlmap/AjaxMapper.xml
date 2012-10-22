@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matychen.grids.dao.AjaxMapper" >
+  <resultMap id="BaseResultMap" type="com.matychen.grids.pojo.Ajax" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="engine" property="engine" jdbcType="VARCHAR" />
+    <result column="browser" property="browser" jdbcType="VARCHAR" />
+    <result column="platform" property="platform" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="REAL" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.search != null" >
+	    and  (
+	    	engine like CONCAT('%', #{condition.search}, '%')
+	    or  browser like CONCAT('%', #{condition.search}, '%')
+	    or  platform like CONCAT('%', #{condition.search}, '%')
+	    or  version like CONCAT('%', #{condition.search}, '%')
+	    or  grade like CONCAT('%', #{condition.search}, '%')
+	    )
+      </if>
+      <if test="condition.engine != null" >
+         and engine = #{condition.engine,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.browser != null" >
+         and browser = #{condition.browser,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.platform != null" >
+         and platform = #{condition.platform,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.version != null" >
+         and version = #{condition.version,jdbcType=REAL}
+      </if>
+      <if test="condition.grade != null" >
+         and grade = #{condition.grade,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.datetime != null" >
+         and datetime = #{condition.datetime,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="example.condition.engine != null" >
+         and engine = #{example.condition.engine,jdbcType=VARCHAR}
+      </if>
+      <if test="example.condition.browser != null" >
+         and browser = #{example.condition.browser,jdbcType=VARCHAR}
+      </if>
+      <if test="example.condition.platform != null" >
+         and platform = #{example.condition.platform,jdbcType=VARCHAR}
+      </if>
+      <if test="example.condition.version != null" >
+         and version = #{example.condition.version,jdbcType=REAL}
+      </if>
+      <if test="example.condition.grade != null" >
+         and grade = #{example.condition.grade,jdbcType=VARCHAR}
+      </if>
+      <if test="example.condition.datetime != null" >
+         and datetime = #{example.condition.datetime,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, engine, browser, platform, version, grade, datetime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.matychen.grids.pojo.Criteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ajax
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ajax
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ajax
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.matychen.grids.pojo.Criteria" >
+    delete from ajax
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.matychen.grids.pojo.Ajax" >
+    insert into ajax (id, engine, browser, 
+      platform, version, grade, 
+      datetime)
+    values (#{id,jdbcType=INTEGER}, #{engine,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, 
+      #{platform,jdbcType=VARCHAR}, #{version,jdbcType=REAL}, #{grade,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.matychen.grids.pojo.Ajax" >
+    insert into ajax
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="engine != null" >
+        engine,
+      </if>
+      <if test="browser != null" >
+        browser,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="engine != null" >
+        #{engine,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null" >
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=REAL},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.matychen.grids.pojo.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ajax
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ajax
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.engine != null" >
+        engine = #{record.engine,jdbcType=VARCHAR},
+      </if>
+      <if test="record.browser != null" >
+        browser = #{record.browser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platform != null" >
+        platform = #{record.platform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=REAL},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ajax
+    set id = #{record.id,jdbcType=INTEGER},
+      engine = #{record.engine,jdbcType=VARCHAR},
+      browser = #{record.browser,jdbcType=VARCHAR},
+      platform = #{record.platform,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=REAL},
+      grade = #{record.grade,jdbcType=VARCHAR},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.matychen.grids.pojo.Ajax" >
+    update ajax
+    <set >
+      <if test="engine != null" >
+        engine = #{engine,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null" >
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        platform = #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=REAL},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.matychen.grids.pojo.Ajax" >
+    update ajax
+    set engine = #{engine,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=VARCHAR},
+      version = #{version,jdbcType=REAL},
+      grade = #{grade,jdbcType=VARCHAR},
+      datetime = #{datetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
